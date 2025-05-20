@@ -6,7 +6,7 @@ export default function Home() {
   const { Option } = Select;
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: unknown) => {
     try {
       const res = await fetch('/api/feedback', {
         method: 'POST',
@@ -27,6 +27,7 @@ export default function Home() {
         });
       }
     } catch (error) {
+      console.log(error);
       messageApi.open({
         type: 'error',
         content: 'Something went wrong, please try again',
@@ -36,9 +37,9 @@ export default function Home() {
   return (
     <section className="section-wrapper">
       {contextHolder}
-      <h1 className="text-center font-bold text-2xl">Khiem Dinh's feedback collection</h1>
+      <h1 className="text-center font-bold text-2xl">Khiem Dinh&apos;s feedback collection</h1>
       <div className="intro">
-        <p>Hello, and thank you for visiting this page. I'm Khiem. I've had the privilege of working at Corsair and Elgato for nearly three years, and now, I'm preparing to begin an exciting new chapter in my career.</p>
+        <p>Hello, and thank you for visiting this page. I&apos;m Khiem. I&apos;ve had the privilege of working at Corsair and Elgato for nearly three years, and now, I&apos;m preparing to begin an exciting new chapter in my career.</p>
         <p>I created this page to kindly ask for your feedback on our time working together. Your insights and reflections are incredibly valuable to me, and they will play a meaningful role in helping me grow and improve as I move forward.</p>
         <p>Thank you again for your time and support — I truly appreciate it.</p>
       </div>
