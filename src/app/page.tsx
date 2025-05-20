@@ -1,13 +1,16 @@
 'use client'
 import { Form, Input, Button, Select, message } from 'antd';
+import { useState } from 'react';
 
 const { TextArea } = Input;
 export default function Home() {
   const { Option } = Select;
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
+  const [isSending, setIsSending] = useState(false)
   const onFinish = async (values: unknown) => {
     try {
+      setIsSending(true)
       const res = await fetch('/api/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -20,13 +23,16 @@ export default function Home() {
           content: 'Feedback sent, thank you',
         });
         form.resetFields()
+        setIsSending(false)
       } else {
+        setIsSending(false)
         messageApi.open({
           type: 'error',
           content: 'Something went wrong, please try again',
         });
       }
     } catch (error) {
+      setIsSending(false)
       console.log(error);
       messageApi.open({
         type: 'error',
@@ -85,7 +91,7 @@ export default function Home() {
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Send Feedback
+          {isSending ? 'Sending...' : 'Send Feedback'}
         </Button>
       </Form.Item>
     </Form>
